@@ -2,6 +2,8 @@
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "c:\\Users\\bom2g\\OneDrive\\Documents\\Gusti\\Tubes PBO\\lib\\jcalendar-1.4.jar",
+        "c:\\Users\\bom2g\\OneDrive\\Documents\\Gusti\\Tubes PBO\\lib\\mysql-connector-java-5.1.23-bin.jar"
     ]
 }
