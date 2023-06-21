@@ -68,7 +68,7 @@ public class AbsensiForm extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-    // Inisialisasi komponen gui 
+    // Inisialisasi komponen GUI 
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();

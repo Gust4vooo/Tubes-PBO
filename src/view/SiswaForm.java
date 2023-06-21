@@ -282,7 +282,7 @@ public class SiswaForm extends javax.swing.JFrame {
         try {
             DatabaseHelper databaseHelper = new DatabaseHelper();
 
-            // Cek apakah Absen sudah ada
+            // Cek apakah Absen sudah ada?
             PreparedStatement checkStatement = databaseHelper.getConnection().prepareStatement(queryCheck);
             checkStatement.setLong(1, Absen);
             ResultSet resultSet = checkStatement.executeQuery();
