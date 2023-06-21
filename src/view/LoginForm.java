@@ -1,7 +1,7 @@
 package view;
 
-import model.User;
-import helper.DatabaseHelper;
+import model.User; // Mengimpor class user 
+import helper.DatabaseHelper; // Mengimpor class DatabaseHelper 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +10,8 @@ import javax.swing.JOptionPane;
 public class LoginForm extends javax.swing.JFrame {
 
 
-    private User user;
+    private User user; // Deklarasikan variabel user yang akan digunakan untuk menyimpan informasi pengguna yang berhasil login
+    // Konstruktor memanggil method initComponents untuk menginisialisasi komponen GUI form login
     public LoginForm() {
         initComponents();
     }
@@ -124,16 +125,17 @@ public class LoginForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
+    // Method validate user yang akan dipanggil saat tombol login ditekan
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                         
         String username = edtUsername.getText();
         String password = new String(edtPassword.getPassword());
         if (username.equals("")) {
-            JOptionPane.showMessageDialog(this, "Username can't be empty");
+            JOptionPane.showMessageDialog(this, "Username tidak boleh kosong");
         } else if (password.equals("")) {
-            JOptionPane.showMessageDialog(this, "Password can't be empty");
+            JOptionPane.showMessageDialog(this, "Password tidak boleh kosong");
         }
         if (validateUser(username, password)) {
-            JOptionPane.showMessageDialog(this, "Login Succesfully!, Welcome " + user.getUsername() + "!");
+            JOptionPane.showMessageDialog(this, "Login Berhasil!, Selamat datang " + user.getUsername() + "!");
             Menu menu = new Menu();
             menu.setVisible(true);
             this.dispose();
@@ -141,7 +143,7 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Invalid username or password");
         }
     }                                        
-
+    // Method untuk memvalidasi username dan password yang dimasukkan oleh pengguna
     private boolean validateUser(String username, String password) {
         String query = "SELECT * FROM user WHERE username = ? AND password = ?";
         try {
@@ -165,11 +167,6 @@ public class LoginForm extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -186,9 +183,7 @@ public class LoginForm extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginForm().setVisible(true);
@@ -196,7 +191,7 @@ public class LoginForm extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Mendeklarasikan semua komponen GUI sebagai variabel                     
     private javax.swing.JButton btnLogin;
     private javax.swing.JPasswordField edtPassword;
     private javax.swing.JTextField edtUsername;
@@ -204,6 +199,5 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    // End of variables declaration                   
+    private javax.swing.JPanel jPanel2;                 
 }
