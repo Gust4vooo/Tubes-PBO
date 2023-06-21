@@ -18,7 +18,7 @@ public class SiswaForm extends javax.swing.JFrame {
         readData();
 
     }
-                       
+    // Inisialisasi komponen GUI                
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -31,7 +31,6 @@ public class SiswaForm extends javax.swing.JFrame {
         tableSiswa = new javax.swing.JTable();
         btnTambah = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
         btnKembali = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -40,7 +39,7 @@ public class SiswaForm extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("TAMBAH DATA Siswa");
+        jLabel1.setText("TAMBAH DATA SISWA");
 
         jLabel2.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -82,13 +81,6 @@ public class SiswaForm extends javax.swing.JFrame {
             }
         });
 
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
         btnKembali.setText("Kembali");
         btnKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,7 +114,6 @@ public class SiswaForm extends javax.swing.JFrame {
                                 .addGap(65, 65, 65)
                                 .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(65, 65, 65)
-                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -145,7 +136,6 @@ public class SiswaForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTambah)
                     .addComponent(btnHapus)
-                    .addComponent(btnUpdate)
                     .addComponent(btnKembali))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,34 +156,29 @@ public class SiswaForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
+    // Menambah action pada tombol kembali
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {                                           
         Menu menu = new Menu();
         menu.setVisible(true);
         this.dispose();
     }                                          
-
+    
+    // Menambah action pada tombol tambah
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
         String Absen = edtAbsen.getText();
         String nama = edtNama.getText();
-
+        // Melakukan validasi
         if (validInput(Absen, nama)) {
-            tambahSiswa(Long.parseLong(Absen), nama);
+            tambahSiswa((int) Long.parseLong(Absen), nama);
         } else {
             JOptionPane.showMessageDialog(this, "Input Tidak Valid");
         }
     }                                         
-
+    // Method untuk mengatur action pada tombol hapus
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
         hapusData();
-    }                                        
-
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-        updateData();
-    }                                         
-
+    }                                                                              
+    // Method untuk mengatur action saat mengklik baris pada tabel siswa
     private void tableSiswaMouseClicked(java.awt.event.MouseEvent evt) {                                            
         int selectedRow = tableSiswa.getSelectedRow();
         if (selectedRow != -1) {
@@ -204,41 +189,7 @@ public class SiswaForm extends javax.swing.JFrame {
             edtNama.setText(nama);
         }
     }                                           
-
-    private void updateData() {
-        int selectedRow = tableSiswa.getSelectedRow();
-        if (selectedRow == -1) {
-            return;
-        }
-
-        String Absen = tableSiswa.getValueAt(selectedRow, 0).toString();
-        String nama = edtNama.getText();
-
-        boolean success = updateSiswa(Absen, nama);
-        if (success) {
-            JOptionPane.showMessageDialog(this, "Data berhasil diperbaharui");
-            readData();
-        } else {
-            JOptionPane.showMessageDialog(this, "Gagal meperbaharui data");
-        }
-    }
-
-    private boolean updateSiswa(String Absen, String nama) {
-        DatabaseHelper databaseHelper = new DatabaseHelper();
-        String query = "UPDATE Siswa SET nama = '" + nama + "' WHERE Absen = '" + Absen + "'";
-        try {
-            Statement statement = databaseHelper.getConnection().createStatement();
-            int rowCount = statement.executeUpdate(query);
-            statement.close();
-
-            return rowCount > 0;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return false;
-    }
-
+    // Method untuk menghapus data siswa
     private void hapusData() {
         int selectedRow = tableSiswa.getSelectedRow();
         if (selectedRow == -1) {
@@ -256,6 +207,7 @@ public class SiswaForm extends javax.swing.JFrame {
         }
     }
 
+    // Method untuk menghapus data siswa dari tabel Siswa dalam database
     private boolean hapusSiswa(String Absen) {
         DatabaseHelper databaseHelper = new DatabaseHelper();
         String query = "DELETE FROM Siswa WHERE Absen = '" + Absen + "'";
@@ -271,7 +223,8 @@ public class SiswaForm extends javax.swing.JFrame {
 
         return false;
     }
-
+    
+    // Method untuk melakukan pengecekan input
     private boolean validInput(String Absen, String nama) {
         // Pengecekan Absen apakah merupakan angka
         if (!Absen.matches("\\d+")) {
@@ -288,13 +241,14 @@ public class SiswaForm extends javax.swing.JFrame {
         return true;
     }
 
+    // Method untuk menginisialisasi tabel siswa
     private void initTable() {
         tableModel = new DefaultTableModel();
         tableSiswa.setModel(tableModel);
         tableModel.addColumn("Absen");
         tableModel.addColumn("Nama Siswa");
     }
-
+    // Method untuk membaca data dari tabel Siswa dalam database dan menampilkan data tersebut ke dalam tabel pada antarmuka pengguna
     public void readData() {
         DatabaseHelper databaseHelper = new DatabaseHelper();
         tableModel.getDataVector().removeAllElements();
@@ -321,7 +275,7 @@ public class SiswaForm extends javax.swing.JFrame {
         }
     }
 
-    private boolean tambahSiswa(Long Absen, String nama) {
+    private boolean tambahSiswa(int Absen, String nama) { 
         // Cek apakah Absen sudah ada dalam tabel
         String queryCheck = "SELECT COUNT(*) FROM Siswa WHERE Absen = ?";
         String queryInsert = "INSERT INTO Siswa (Absen, nama) VALUES (?,?)";
@@ -370,7 +324,6 @@ public class SiswaForm extends javax.swing.JFrame {
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnTambah;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JTextField edtAbsen;
     private javax.swing.JTextField edtNama;
     private javax.swing.JLabel jLabel1;
