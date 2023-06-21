@@ -296,7 +296,7 @@ public class SiswaForm extends javax.swing.JFrame {
                 return false;
             }
 
-            // Tambahkan data Siswa
+            // Menambahkan data Siswa
             PreparedStatement insertStatement = databaseHelper.getConnection().prepareStatement(queryInsert);
             insertStatement.setLong(1, Absen);
             insertStatement.setString(2, nama);
